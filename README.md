@@ -22,7 +22,7 @@ n_classes = 3
 criterion = CostSensitiveLoss(n_classes)
 ```
 
-By default, `criterion` implements a cost matrix that penalizes faraway predictions more than closeby predictions, which a useful thing to have in image grading/ordinal classification problems:
+By default, `criterion` implements a cost matrix that penalizes faraway predictions more than closeby predictions, which is a useful thing to have in image grading/ordinal classification problems:
 
 ```
 print(criterion.M)
@@ -30,15 +30,16 @@ print(criterion.M)
 [0.5000, 0.0000, 0.5000],
 [1.0000, 0.5000, 0.0000]]
 ```
-You can modify that to suit your needs or impose other kind of penalties. All this and more is explained in the `CS_loss.ipynb` notebook inside this repo.
+You can modify that to suit your needs or impose other kind of penalties. All this and more (e.g. how to use this tool to model a-priori inter-observer disagreement knowledge you may have - a confusion matrix for annotators) is explained in the `CS_loss.ipynb` notebook inside this repo.
 
 ### Cost-Sensitive Regularization
-In our experiments (and elsewhere) we found out that simply using a CS loss leads to lots of trouble in terms of CNNs staying at local minima where they will predict a trivial configuration (all the time the same category), which seems to be very satisfying for this kind of losses. For this reason, we recommend using this as a regularizer for other standard classification losses. 
+In our experiments (and elsewhere) we found out that simply using a CS loss leads to lots of troubles in terms of CNNs staying at local minima where they will predict a trivial configuration (all the time the same category), which seems to be very satisfying for this kind of losses. For this reason, we recommend using this as a regularizer for other standard classification losses. 
 
 In our implementation we provide a wrapper for doing this, where you specify a `base_loss` and the regularization parameter `lambd`:
 
 ```
 from utils.losses import CostSensitiveRegularizedLoss
+
 n_classes = 3 
 base_loss = 'ce'
 lambd = 10
