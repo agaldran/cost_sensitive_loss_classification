@@ -1,0 +1,6 @@
+# Ignore python local caching files
+__pycache__
+**.idea
+# Ignore notebook checkpoints
+**.ipynb_checkpoints
+# .ipynb
