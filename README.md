@@ -11,7 +11,7 @@ The proposed idea is quite simple. If you want to penalize different kinds of er
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\displaystyle&space;M&space;=&space;\begin{bmatrix}&space;0&space;&&space;0&space;&&space;0\\&space;0&space;&&space;0&space;&&space;0\\&space;10&space;&&space;0&space;&&space;0\end{bmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\displaystyle&space;M&space;=&space;\begin{bmatrix}&space;0&space;&&space;0&space;&&space;0\\&space;0&space;&&space;0&space;&&space;0\\&space;10&space;&&space;0&space;&&space;0\end{bmatrix}" title="\displaystyle M = \begin{bmatrix} 0 & 0 & 0\\ 0 & 0 & 0\\ 10 & 0 & 0\end{bmatrix}" /></a>
 
-Given an example with a label `y=k` and a one-hot encoded prediction `U(x)=[x_1, x_2, x_3]` (being U your neural network or whatever model you are using), a cost-sensitive loss would be computed simply taking the scalar product of the `k`-th row of `M` and `x`. As you can see, if your example has `y=2` and you have a (correct) prediction `U(x)=[0,0,1]`, then the loss is `l=<[10, 0, 0], [0,0,1]> = 0`. However, if you have an incorrect prediction `U(x)=[1,0,0]`, you get `l=10`. And the funny part, if you have a prediction `U(x)=[0,1,0]`, you still get `l=0`, since you did not penalize this kind of error within `M`.
+Given an example with a label `y=k` and a one-hot encoded prediction `U(x)=[x_1, x_2, x_3]` (being `U` your neural network or whatever model you are using), a cost-sensitive loss would be computed by simply taking the scalar product of the `k`-th row of `M` and `x`. As you can see, if your example has `y=2` and you have a (correct) prediction `U(x)=[0,0,1]`, then the loss is `L=<[10, 0, 0], [0,0,1]> = 0`. However, if you have an incorrect prediction `U(x)=[1,0,0]`, you get `L=10`. And the funny part, if you have a prediction `U(x)=[0,1,0]`, you still get `L=0`, since you did not penalize this kind of error within `M`.
 
 Enough talking, if you want to use this loss function, you just need to import it and instantiate it as follows:
 ```
@@ -29,7 +29,7 @@ print(criterion.M)
 [0.5000, 0.0000, 0.5000],
 [1.0000, 0.5000, 0.0000]]
 ```
-You can modify that to suit your needs or impose other kind of penalties. All this and more (e.g. how to use this tool to model a-priori inter-observer disagreement knowledge you may have - a confusion matrix for annotators) is explained in the `CS_loss.ipynb` notebook inside this repo.
+Once instantiated, you can modify `criterion.M` to suit your needs or impose other kind of penalties. All this and more (e.g. how to use this tool to model a-priori inter-observer disagreement knowledge you may have - a confusion matrix for annotators) is explained in the `CS_loss.ipynb` notebook inside this repo.
 
 ### Cost-Sensitive Regularization
 In our experiments (and elsewhere) we found out that simply using a CS loss leads to lots of troubles in terms of CNNs staying at local minima where they will predict a trivial configuration (all the time the same category), which seems to be very satisfying for this kind of losses. For this reason, we recommend using this as a regularizer for other standard classification losses. 
