@@ -7,17 +7,10 @@ Adrian Galdran, José Dolz, Hadi Chakor, Hervé Lombaert, Ismail Ben Ayed
 Medical Image Computing and Computer Assisted Intervention, 2020 (accepted)
 ```
 
-The proposed idea is quite simple. If you want to penalize different kinds of errors while training your model to perform multi-class classification, you first neeed to encode those penalties into a penalty (or confusion) matrix. In a silly example, imagine you have a problem with `n=3` classes, and you are very worried that your model mis-classifies instances of class `2` as class `0`, but you don't care about all the other possible types of errors. You would build a matrix like the following:
+The proposed idea is quite simple. If you want to penalize different kinds of errors while training your model to perform multi-class classification, you first neeed to encode those penalties into a penalty (or confusion) matrix. In a silly example, imagine you have a problem with `n=3` classes, and you are very worried that your model mis-classifies instances of class `2` as class `0`, but you don't care at all about any of the other possible types of errors. You would build a matrix like the following:
 
-$$
-\displaystyle
-M = \begin{bmatrix}
-0 &  0 & 0\\
-0 &  0 & 0\\
-10 &  0 & 0\end{bmatrix}
-\end{equation}
-$$
-$\begin{bmatrix}a & b\\c & d\end{bmatrix}$
+<img src="http://www.sciweavers.org/tex2img.php?eq=%0A%5Cdisplaystyle%0AM%20%3D%20%5Cbegin%7Bbmatrix%7D%0A0%20%26%20%200%20%26%200%5C%5C%0A0%20%26%20%200%20%26%200%5C%5C%0A10%20%26%20%200%20%26%200%5Cend%7Bbmatrix%7D%0A&bc=White&fc=Black&im=png&fs=12&ff=arev&edit=0" align="center" border="0" alt="\displaystyleM = \begin{bmatrix}0 &  0 & 0\\0 &  0 & 0\\10 &  0 & 0\end{bmatrix}" width="137" height="65" />
+
 
 Given an example with a label `y=k` and a one-hot encoded prediction `U(x)=[x_1, x_2, x_3]` (being U your neural network or whatever model you are using), a cost-sensitive loss would be computed simply taking the scalar product of the `k`-th row of `M` and `x`. As you can see, if your example has `y=2` and you have a (correct) prediction `U(x)=[0,0,1]`, then the loss is `l=<[10, 0, 0], [0,0,1]> = 0`. However, if you have an incorrect prediction `U(x)=[1,0,0]`, you get `l=10`. And the funny part, if you have a prediction `U(x)=[0,1,0]`, you still get `l=0`, since you did not penalize this kind of error within `M`.
 
