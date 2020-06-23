@@ -11,7 +11,7 @@ The proposed idea is quite simple. If you want to penalize different kinds of er
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\displaystyle&space;M&space;=&space;\begin{bmatrix}&space;0&space;&&space;0&space;&&space;0\\&space;0&space;&&space;0&space;&&space;0\\&space;10&space;&&space;0&space;&&space;0\end{bmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\displaystyle&space;M&space;=&space;\begin{bmatrix}&space;0&space;&&space;0&space;&&space;0\\&space;0&space;&&space;0&space;&&space;0\\&space;10&space;&&space;0&space;&&space;0\end{bmatrix}" title="\displaystyle M = \begin{bmatrix} 0 & 0 & 0\\ 0 & 0 & 0\\ 10 & 0 & 0\end{bmatrix}" /></a>
 
-Given an example with a label `y=k` and a one-hot encoded prediction `U(x)=[x_1, x_2, x_3]` (being `U` your neural network or whatever model you are using), a cost-sensitive loss would be computed by simply taking the scalar product of the `k`-th row of `M` and `x`. As you can see, if your example has `y=2` and you have a (correct) prediction `U(x)=[0,0,1]`, then the loss is `L=<[10, 0, 0], [0,0,1]> = 0`. However, if you have an incorrect prediction `U(x)=[1,0,0]`, you get `L=10`. And the funny part, if you have a prediction `U(x)=[0,1,0]`, you still get `L=0`, since you did not penalize this kind of error within `M`.
+Given an example with a label `y=k` and a one-hot encoded prediction `U(x)=[x_1, x_2, x_3]` (being `U` your neural network or whatever model you are using), a cost-sensitive loss would be computed by simply taking the scalar product of the `k`-th row of `M` and `U(x)`. As you can see, if your example has `y=2` and you have a (correct) prediction `U(x)=[0,0,1]`, then the loss is `L=<[10, 0, 0], [0,0,1]> = 0`. However, if you have an incorrect prediction `U(x)=[1,0,0]`, you get `L=10`. And the funny part, if you have a prediction `U(x)=[0,1,0]`, you still get `L=0`, since you did not penalize this kind of error within `M`.
 
 Enough talking, if you want to use this loss function, you just need to import it and instantiate it as follows:
 ```
@@ -20,6 +20,8 @@ from utils.losses import CostSensitiveLoss
 n_classes = 3
 criterion = CostSensitiveLoss(n_classes)
 ```
+
+Please have into account that `criterion` expects raw outputs of your network, i.e., pre-softmax activations. It will apply a softmax internally (you can change that with the `normalization` parameter).
 
 By default, `criterion` implements a cost matrix that penalizes faraway predictions more than closeby predictions, which is a useful thing to have in image grading/ordinal classification problems:
 
