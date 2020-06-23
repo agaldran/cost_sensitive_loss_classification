@@ -9,15 +9,16 @@ International Conference on Medical Image Computing and Computer Assisted Interv
 
 The proposed idea is quite simple. If you want to penalize different kinds of errors while training your model to perform multi-class classification, you first neeed to encode those penalties into a penalty (or confusion) matrix. In a silly example, imagine you have a problem with $$n=3$$ classes, and you are very worried that your model mis-classifies instances of class $2$ as class $0$, but you don't care about all the other possible types of errors. You would build a matrix like the following:
 
-\begin{equation}
+$$
 \displaystyle
 M = \begin{bmatrix}
 0 &  0 & 0\\
 0 &  0 & 0\\
 10 &  0 & 0\end{bmatrix}
 \end{equation}
+$$
 
-Given an example with a label $\hat{y}=k$ and a one-hot encoded prediction $U(x)=[x_1, x_2, x_3]$ (being $U$ your neural network or whatever model you are using), a cost-sensitive loss would be computed simply taking the scalar product of the $k$-th row of $M$ and $\mathbf{x}$. As you can see, if your example has $\hat{y}=2$ and you have a (correct) prediction $U(x)=[0,0,1]$, then the loss is $l=\langle [10,  0, 0], [0,0,1]\rangle = 0$. However, if you have an incorrect prediction $U(x)=[1,0,0]$, you get $l=10$. And the funny part, if you have a prediction $U(x)=[0,1,0]$, you still get $l=0$, since you did not penalize this kind of error within $M$.
+Given an example with a label `y=k` and a one-hot encoded prediction `U(x)=[x_1, x_2, x_3]` (being U your neural network or whatever model you are using), a cost-sensitive loss would be computed simply taking the scalar product of the `k`-th row of `M` and `x`. As you can see, if your example has `y=2` and you have a (correct) prediction `U(x)=[0,0,1]`, then the loss is `l=<[10, 0, 0], [0,0,1]> = 0`. However, if you have an incorrect prediction `U(x)=[1,0,0]`, you get `l=10`. And the funny part, if you have a prediction `U(x)=[0,1,0]`, you still get `l=0`, since you did not penalize this kind of error within `M`.
 
 Enough talking, if you want to use this loss function, you just need to import it and instantiate it as follows:
 ```
