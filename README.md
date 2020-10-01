@@ -54,7 +54,7 @@ cs_regularized_criterion = CostSensitiveRegularizedLoss(n_classes=n_classes, bas
 We provide other base losses in our implementation (focal loss, cross-entropy with label smoothing, cross-entropy with gaussian label smoothing). Please see the notebook for more details.
 
 ### Cost-Senstive Regularization for Diabetic retinopathy Classification
-You first need to download the data and store it all in the `data/images` folder, see the csv files for our split. We also pre-processed images by cropping to the field-of-view and resizing, which provides faster training than having to resize on-the-fly for each iteration. You can probably recycle part of the code we used for this, it's in `prepare_training_data.py` and `prepare_test_data.py`.
+You first need to download the [data](https://www.kaggle.com/c/diabetic-retinopathy-detection/data), unzip and and store all images in the `data/images` folder, see the csv files for our train/val split. We also pre-processed images by cropping to the field-of-view and resizing, which provides faster training than having to resize on-the-fly for each iteration. You can probably recycle part of the code we used for this, it's in `prepare_training_data.py` and `prepare_test_data.py`.
 
 When everything is ready, you can for example run the following:
 ```
