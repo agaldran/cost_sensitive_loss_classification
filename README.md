@@ -1,11 +1,15 @@
 # Cost-Sensitive loss for multi-class classification
-This is a preliminary repository containing our implementation of cost-sensitive loss functions for classification tasks in pytorch, as presented in:
+This is a repository containing our implementation of cost-sensitive loss functions for classification tasks in pytorch, as presented in:
 
 ```
 Cost-Sensitive Regularization for Diabetic Retinopathy Grading from Eye Fundus Images
 Adrian Galdran, José Dolz, Hadi Chakor, Hervé Lombaert, Ismail Ben Ayed
 Medical Image Computing and Computer Assisted Intervention, 2020 (accepted)
 ```
+
+If you find the code here useful in your research, we appreciate if you can cite our work. Thanks!
+
+### Introduction
 
 The proposed idea is quite simple. If you want to penalize different kinds of errors while training your model to perform multi-class classification, you first neeed to encode those penalties into a penalty (or confusion) matrix. In a silly example, imagine you have a problem with `n=3` classes, and you are very worried that your model mis-classifies instances of class `2` as class `0`, but you don't care at all about any of the other possible types of errors. You would build a matrix like the following:
 
@@ -49,5 +53,19 @@ cs_regularized_criterion = CostSensitiveRegularizedLoss(n_classes=n_classes, bas
 
 We provide other base losses in our implementation (focal loss, cross-entropy with label smoothing, cross-entropy with gaussian label smoothing). Please see the notebook for more details.
 
-If you find the code here useful in your research, we appreciate if you can cite our work. Thanks!
+### Cost-Senstive Regularization for Diabetic retinopathy Classification
+You first need to download the data and store it all in the `data/images` folder, see the csv files for our split. We also pre-processed images by cropping to the field-of-view and resizing, which provides faster training than having to resize on-the-fly for each iteration. You can probably recycle part of the code we used for this, it's in `prepare_training_data.py` and `prepare_test_data.py`.
+
+When everything is ready, you can for example run the following:
+```
+python train.py --csv_train train.csv --model_name resnext50 --base_loss gls --labmd 10 --exp 2 --save_path gls_reg_1e2_resnext50_exp2
+```
+Which trains a resnext50 model on the eyepacs dataset with a Gaussian Label Smoothing+Cross-Entropy loss, that is regularized by a CS term with a weight of 10, and where the cost matrix is L2 (because of --exp 2). 
+After training, weights are stored at `experiments/gls_reg_1e2_resnext50_exp2/`. If you now want to generate predictions on the Eyepacs test set, you would run:
+```
+test_dihedral_tta.py --csv_test data/test_eyepacs.csv --model_name resnext50 --load_path experiments/gls_reg_1e2_resnext50_exp2 --csv_out results/results.csv
+```
+Results of this model on the test set of Eyepacs and on Messidor-2 are already present in `results/gls_reg_1e2_resnext50_exp2_Mtask_eyepacs.csv` and `results/gls_reg_1e2_resnext50_exp2_Mtask_messidor2.csv`.
+
+
 
