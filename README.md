@@ -5,6 +5,7 @@ This is a repository containing our implementation of cost-sensitive loss functi
 Cost-Sensitive Regularization for Diabetic Retinopathy Grading from Eye Fundus Images
 Adrian Galdran, José Dolz, Hadi Chakor, Hervé Lombaert, Ismail Ben Ayed
 Medical Image Computing and Computer Assisted Intervention, 2020 (accepted)
+[Link](https://arxiv.org/abs/2010.00291)
 ```
 
 If you find the code here useful in your research, we appreciate if you can cite our work. Thanks!
