@@ -7,7 +7,7 @@ Adrian Galdran, José Dolz, Hadi Chakor, Hervé Lombaert, Ismail Ben Ayed
 Medical Image Computing and Computer Assisted Intervention, 2020 (accepted)
 ```
 
-The ArXiv version is [here](https://arxiv.org/abs/2010.00291). If you find the code here useful in your research, we appreciate if you can cite our work. Thanks!
+The ArXiv version is [here](https://arxiv.org/abs/2010.00291). You can find a quick introduction to how to use our code in [this notebook](https://github.com/agaldran/cost_sensitive_loss_classification/blob/master/CS_loss.ipynb). If you find the code here useful in your research, we appreciate if you can cite our work. Thanks!
 
 ### Introduction
 
