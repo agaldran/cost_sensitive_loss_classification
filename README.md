@@ -58,7 +58,7 @@ You first need to download the [data](https://www.kaggle.com/c/diabetic-retinopa
 
 When everything is ready, you can for example run the following:
 ```
-python train.py --csv_train train.csv --model_name resnext50 --base_loss gls --labmd 10 --exp 2 --save_path gls_reg_1e2_resnext50_exp2
+python train.py --csv_train train.csv --model_name resnext50 --base_loss gls --lambd 10 --exp 2 --save_path gls_reg_1e2_resnext50_exp2
 ```
 Which trains a resnext50 model on the eyepacs dataset with a Gaussian Label Smoothing+Cross-Entropy loss, that is regularized by a CS term with a weight of 10, and where the cost matrix is L2 (because of --exp 2). 
 After training, weights are stored at `experiments/gls_reg_1e2_resnext50_exp2/`. If you now want to generate predictions on the Eyepacs test set, you would run:
